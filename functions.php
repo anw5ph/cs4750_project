@@ -10,6 +10,7 @@ function userLogIn($email, $password) {
         $result = $statement->fetch();
     
         if (password_verify($password, $result[0])) {
+            setcookie('user', $email, time()+3600);
             header("Location:home.php");
         }
         else {
@@ -21,6 +22,24 @@ function userLogIn($email, $password) {
         echo $e->getMessage();
     }
     
+}
+
+function userLogout(){
+    if (count($_COOKIE) > 0)
+    {
+        foreach ($_COOKIE as $key => $value)
+        {
+          // Deletes the variable (array element) where the value is stored in this PHP.
+          // However, the original cookie still remains intact in the browser.
+            unset($_COOKIE[$key]);
+
+          // To completely remove cookies from the client,
+          // set the expiration time to be in the past
+            setcookie($key, '', time() - 3600);
+        }
+       header('Location: login.php');
+
+    }
 }
 
 function addUser($firstName, $middleName, $lastName, $email, $location, $password) {

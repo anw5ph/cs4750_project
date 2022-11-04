@@ -2,6 +2,8 @@
 require("connect-db.php");
 require("functions.php");
 
+if (!isset($_COOKIE['user']))
+{
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
         addUser($_POST['firstName'], $_POST['middleName'], $_POST['lastName'], $_POST['email'], $_POST['location'], $_POST['password']);
@@ -322,7 +324,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
+<?php
+    } else {
+        header('Location: index.php');
+    }
+?>
 </body>
 
 </html>
