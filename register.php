@@ -2,12 +2,12 @@
 require("connect-db.php");
 require("functions.php");
 
-if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
-    addUser($_POST['firstName'], $_POST['middleName'], $_POST['lastName'], $_POST['email'], $_POST['location'], $_POST['password']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
+        addUser($_POST['firstName'], $_POST['middleName'], $_POST['lastName'], $_POST['email'], $_POST['location'], $_POST['password']);
+    }
 }
-
 ?>
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -29,7 +29,7 @@ if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
         <div class="row align-items-center justify-content-center" style="min-height: 100vh">
             <div class="col-md-4">
 
-                <form action="login.php" method="post">
+                <form action="register.php" method="post">
 
                     <h2 style="text-align: center; color: gray;">Registration</h2>
                     <br>
@@ -61,7 +61,7 @@ if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
 
                     <!-- Location input -->
                     <div class="form-outline mb-4">
-                        <select>
+                        <select name='location'>
                             <option name="Afghanistan">Afghanistan</option>
                             <option name="Albania">Albania</option>
                             <option name="Algeria">Algeria</option>
@@ -310,7 +310,7 @@ if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
                     </div>
 
                     <!-- Submit button -->
-                        <button type="submit" name="Register" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >REGISTER</button>
+                        <button type="submit" value = "Register" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >REGISTER</button>
 
                     <!-- Register buttons -->
                     <div class="text-center">

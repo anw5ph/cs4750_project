@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'SIGN IN') {
         userLogIn($_POST['email'], $_POST['password']);
     }
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
+        addUser($_POST['firstName'], $_POST['middleName'], $_POST['lastName'], $_POST['email'], $_POST['location'], $_POST['password']);
+    }
 }
 ?>
 
@@ -25,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-
     <div class="container">
         <div class="row align-items-center justify-content-center" style="min-height: 100vh">
             <div class="col-md-4">
