@@ -23,9 +23,9 @@ function userLogIn($email, $password) {
     
 }
 
-function addFriend($firstName, $middleName, $lastName, $email, $location, $password) {
+function addUser($firstName, $middleName, $lastName, $email, $location, $password) {
     global $db;
-    $query = "INSERT INTO user VALUES (DEFAULT, :firstName, :middleName, :lastName, :email, :location, :password)";
+    $query = "INSERT INTO user (firstName, middleName, lastName, email, location, password) VALUES (:firstName, :middleName, :lastName, :email, :location, :password)";
 
     try {
         $statement = $db->prepare($query);
@@ -40,7 +40,8 @@ function addFriend($firstName, $middleName, $lastName, $email, $location, $passw
         $statement->execute();
 
         header("Location:login.php");
-        // $statement->closeCursor();
+        $statement->closeCursor();
+
     }
     catch (PDOException $e) {
         // echo $e->getMessage();
@@ -52,6 +53,6 @@ function addFriend($firstName, $middleName, $lastName, $email, $location, $passw
     catch (Exception $e) {
         echo $e->getMessage();
     }
-    
+
 }
 ?>
