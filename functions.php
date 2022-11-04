@@ -73,7 +73,7 @@ function currentUser($email) {
 function getTransactions($userID, $order) {
     global $db;
     $query = "
-    (SELECT name, service AS \"Category\", period, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
+    (SELECT name, service AS \"Category\", period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
@@ -81,7 +81,7 @@ function getTransactions($userID, $order) {
              expense
         WHERE userID = :userID)
     UNION
-    (SELECT name, source, period, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
+    (SELECT name, source, period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
@@ -123,7 +123,7 @@ function filterTransactions($userID, $since, $until, $order) {
 
     global $db;
     $query = "
-    (SELECT name, period, numPayments, allTime, startDate, endDate, dailyRate *
+    (SELECT name, period, flatAmount, numPayments, allTime, startDate, endDate, dailyRate *
     DATEDIFF(if(endDate > :until, :until, endDate), if(startDate < :since, :since, startDate)) AS \"elapsed\"
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
@@ -136,7 +136,7 @@ function filterTransactions($userID, $since, $until, $order) {
               )
     )
     UNION
-    (SELECT name, period, numPayments, allTime, startDate, endDate, dailyRate *
+    (SELECT name, period, flatAmount, numPayments, allTime, startDate, endDate, dailyRate *
     DATEDIFF(if(endDate > :until, :until, endDate), if(startDate < :since, :since, startDate)) AS \"elapsed\"
         FROM transaction            NATURAL JOIN
             transactionDailyRate    NATURAL JOIN

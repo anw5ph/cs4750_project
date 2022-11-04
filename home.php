@@ -121,19 +121,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <h3>List of Transactions</h3>
 <div class="row justify-content-center">  
-<table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
+<table class="w3-table w3-bordered w3-card-4 center" style="width:90%">
   <thead>
   <tr style="background-color:#B0B0B0">
-    <th width="25%"><b>Name</b></th>      
-    <th width="25%"><b>Period Length (Days)</b></th> 
-    <th width="25%"><b>Period Value ($)</b></th>        
+    <th width="20%"><b>Name</b></th>      
+    <th width="10%"><b>Period Length (Days)</b></th> 
+    <th width="10%"><b>Flat Amount ($)</b></th> 
+    <th width="10%"><b>Elapsed Value ($)</b></th>   
+    <th width="25%"><b>Start</b></th>  
+    <th width="25%"><b>End</b></th>  
   </tr>
   </thead>
 <?php foreach ($list_of_transactions as $trans_info): ?>
   <tr>
      <td><?php echo $trans_info['name']; ?></td>  
-     <td><?php echo $trans_info['period']; ?></td>         
-     <td><?php echo $trans_info['elapsed']; ?></td>          
+     <td><?php echo $trans_info['period']; ?></td>
+     <td><?php echo $trans_info['flatAmount']; ?></td>         
+     <td><?php echo $trans_info['elapsed']; ?></td>      
+     <td><?php echo $trans_info['startDate']; ?></td>   
+     <td><?php echo $trans_info['endDate']; ?></td>         
   </tr>
 <?php endforeach; ?>
 </table>
