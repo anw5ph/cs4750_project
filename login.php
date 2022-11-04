@@ -7,6 +7,8 @@ if (!isset($_COOKIE['user']))
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'SIGN IN') {
+        $curr_user = currentUser($_POST['email']);
+        $_SESSION['curr_user']  = $curr_user;
         userLogIn($_POST['email'], $_POST['password']);
     }
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Register') {
