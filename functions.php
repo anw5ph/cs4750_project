@@ -10,6 +10,7 @@ function userLogIn($email, $password) {
         $result = $statement->fetch();
     
         if (password_verify($password, $result[0])) {
+            setcookie('user', $email, time()+3600);
             header("Location:index.php");
         }
         else {
