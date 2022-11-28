@@ -1,0 +1,9 @@
+#footer-container {
+    bottom: 0;
+    justify-content: center;
+}
+
+.btn-custom {
+    background-color: #F84C1E;
+    color: white;
+}

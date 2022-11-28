@@ -37,7 +37,7 @@ function userLogout(){
           // set the expiration time to be in the past
             setcookie($key, '', time() - 3600);
         }
-       header('Location: login.php');
+       header('Location:login.php');
 
     }
 }
@@ -87,6 +87,38 @@ function currentUser($email) {
     $statement->closeCursor();
     return $result['userID'];
 
+
+}
+
+function getUser($curr_user) {
+    global $db;
+
+    $query = "SELECT * FROM user WHERE userID = :curr_user;";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':curr_user', $curr_user);
+    $statement->execute();
+    $result = $statement->fetch();
+    $statement->closeCursor();
+    return $result;
+
+
+}
+
+function updateUser($userID, $firstName, $middleName, $lastName, $email, $location) {
+    global $db;
+    $query = "UPDATE user SET firstName=:firstName, middleName=:middleName, lastName=:lastName, email=:email, location=:location WHERE userID=:userID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":userID", $userID);
+    $statement->bindValue(":firstName", $firstName);
+    $statement->bindValue(":middleName", $middleName);
+    $statement->bindValue(":lastName", $lastName);
+    $statement->bindValue(":email", $email);
+    $statement->bindValue(":location", $location);
+    $statement->execute();
+
+    header("Location:my-account.php");
+    $statement->closeCursor();
 
 }
 

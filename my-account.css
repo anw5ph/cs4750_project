@@ -1,0 +1,14 @@
+.btn-block {
+    background-color: #F84C1E; 
+    border-color: #F84C1E; 
+    color: white;
+    /* width: 100%;  */
+    box-shadow: 0 4px 9px -4px #F84C1E; 
+}
+
+#footer-container {
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+    justify-content: center;
+}
