@@ -15,6 +15,9 @@ $default_order = "startDate DESC";
 $user_of_trans_to_delete = null;
 $trans_to_delete = null;
 
+$user_of_trans_to_update = null;
+$trans_to_update = null;
+
 $list_of_transactions = getTransactions($curr_user, $default_order);
 
 ?>
@@ -36,6 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Delete') {
     delTransaction($_POST['user_of_trans_to_delete'], $_POST['trans_to_delete']);
+    $list_of_transactions = getTransactions($curr_user, $default_order);
+  }
+
+  elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Update') {
+    updateTransaction($_POST['user_of_trans_to_update'], $_POST['trans_to_update']);
     $list_of_transactions = getTransactions($curr_user, $default_order);
   }
 }
@@ -155,16 +163,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <h3>List of Transactions</h3>
     <div class="row justify-content-center">
-    <table class="w3-table w3-bordered w3-card-4 center" style="width:90%">
+    <table class="w3-table w3-bordered w3-card-4 center" style="width:95%">
       <thead>
       <tr style="background-color:#B0B0B0">
         <th width="20%"><b>Name</b></th>
-        <th width="10%"><b>Period Length (Days)</b></th>
-        <th width="10%"><b>Flat Amount ($)</b></th>
-        <th width="10%"><b>Elapsed Value ($)</b></th>
-        <th width="20%"><b>Start</b></th>
-        <th width="20%"><b>End</b></th>
-        <th width="10%"><b></b></th>
+        <th width="20%"><b>Period Length (Days)</b></th>
+        <th width="14%"><b>Flat Amount ($)</b></th>
+        <th width="16%"><b>Elapsed Value ($)</b></th>
+        <th width="15%"><b>Start</b></th>
+        <th width="15%"><b>End</b></th>
+        <th width="10%"><b>Update?</b></th>
+        <th width="10%"><b>Delete?</b></th>
       </tr>
       </thead>
     <?php foreach ($list_of_transactions as $trans_info): ?>
@@ -175,6 +184,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          <td><?php echo $trans_info['elapsed']; ?></td>
          <td><?php echo $trans_info['startDate']; ?></td>
          <td><?php echo $trans_info['endDate']; ?></td>
+         <td>
+            <form action="home.php" method="post">
+                 <input type = "submit" value="Update" class = "btn btn-primary" name = "btnAction" title="Update Transaction" data-toggle="confirmation"/>
+                 <input type="hidden" name="trans_to_update" value="<?php echo $trans_info['transID']; ?>" />
+                 <input type="hidden" name="user_of_trans_to_update" value="<?php echo $userInfo['userID']; ?>" />
+            </form>
+         </td>
          <td>
             <form action="home.php" method="post">
                  <input type = "submit" value="Delete" class = "btn btn-danger" name = "btnAction" title="Remove Transaction" data-toggle="confirmation"/>

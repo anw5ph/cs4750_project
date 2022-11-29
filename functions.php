@@ -161,6 +161,10 @@ function delTransaction($userID, $transID) {
     $statement->closeCursor();
 }
 
+function updateTransaction($userID, $transID) {
+    
+}
+
 
 function filterTransactions($userID, $since, $until, $order) {
 
