@@ -125,7 +125,7 @@ function updateUser($userID, $firstName, $middleName, $lastName, $email, $locati
 function getTransactions($userID, $order) {
     global $db;
     $query = "
-    (SELECT name, service AS \"Category\", period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
+    (SELECT transID, name, service AS \"Category\", period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
@@ -133,7 +133,7 @@ function getTransactions($userID, $order) {
              expense
         WHERE userID = :userID)
     UNION
-    (SELECT name, source, period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
+    (SELECT transID, name, source, period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
@@ -150,7 +150,16 @@ function getTransactions($userID, $order) {
     return $result;
 }
 
-
+function delTransaction($userID, $transID) {
+    global $db;
+    $query = "DELETE FROM expense WHERE userID = :userID AND transID = :transID;
+              DELETE FROM incomeSource WHERE userID = :userID AND transID = :transID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(":userID", $userID);
+    $statement->bindValue(":transID", $transID);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 
 function filterTransactions($userID, $since, $until, $order) {
