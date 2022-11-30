@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="row align-items-center justify-content-center" style="min-height: 100vh">
         <div class="col-md-4">
 
-            <form action="addtransaction.php" method="post">
+            <form action="home.php" method="post">
 
                 <h2 style="text-align: center; color: gray;">Add Transaction</h2>
                 <br>
