@@ -67,6 +67,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-outline mb-4">
                     <input type="text" name="startDate" id="startDate" class="form-control" placeholder="Start Date"/>
                 </div>
+                
+                <div class="form-outline mb-4">
+                    <?php
+                        //$sql="SELECT name,id FROM student"; 
+
+                        $sql="SELECT service FROM expenseServiceCategory"; 
+                    ?>
+                    <select name='service'>Service>
+                    <?php
+                        foreach ($dbo->query($sql) as $row){//Array or records stored in $row
+                    ?>
+                        <option name= <?php echo $row[service]; ?>><?php echo $row[service]; ?></option>
+                    <?php
+                        }
+                    ?>
+                </select>
+                </div>
 
                 <button type="submit" value = "Add Transaction" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD TRANSACTION</button>
             </form>
