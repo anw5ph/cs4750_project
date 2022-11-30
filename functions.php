@@ -289,11 +289,18 @@ function filterTransactions($userID, $since, $until, $order, $type) {
     return $result;
 }
 
-function addExpense($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate, $service) {
+function addExpense($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate, $endDate, $service) {
     global $db;
     $query = "INSERT INTO transactions (userID, transID, name, description, flatAmount, period, numPayments, startDate) VALUES (:userID, :transID, :name, :description, :flatAmount, :period, :numPayments, :startDate)";
 
     $query = "INSERT INTO expense (userID, transID, service) VALUES (:userID, :transID, :service)";
+
+    $query = "INSERT INTO transactionAllTime (flatAmount, numPayments, allTime) VALUES (:flatAmount, :numPayments, :allTime)";
+
+    $query = "INSERT INTO transactionDailyRate(period, flatAmount, dailyRate) VALUES (:period, :flatAmount, :dailyRate)";
+
+    $query = "INSERT INTO transactionDates (numPayments, startDate, endDate, period) VALUES (:numPayments, :startDate, :endDate, :period)";
+
 
     try {
         $statement = $db->prepare($query);
@@ -305,7 +312,12 @@ function addExpense($userID, $transID, $name, $description, $flatAmount, $period
         $statement->bindValue(':period', $period);
         $statement->bindValue(':numPayments', $numPayments);
         $statement->bindValue(':startDate', $startDate);
+        $statement->bindValue(':endDate', $endDate);
         $statement->bindValue(':service', $service);
+
+        $statement->bindValue(':allTime',$flatAmount * $numPayments);
+        $statement->bindValue(':dailyRate',$flatAmount / $period);
+
         $statement->execute();
 
         header("Location:home.php");
@@ -331,6 +343,13 @@ function addIncome($userID, $transID, $name, $description, $flatAmount, $period,
 
     $query = "INSERT INTO incomeSource (userID, transID, source) VALUES (:userID, :transID, :source)";
 
+    $query = "INSERT INTO transactionAllTime (flatAmount, numPayments, allTime) VALUES (:flatAmount, :numPayments, :allTime)";
+
+    $query = "INSERT INTO transactionDailyRate(period, flatAmount, dailyRate) VALUES (:period, :flatAmount, :dailyRate)";
+
+    $query = "INSERT INTO transactionDates (numPayments, startDate, endDate, period) VALUES (:numPayments, :startDate, :endDate, :period)";
+
+
     try {
         $statement = $db->prepare($query);
         $statement->bindValue(':userID', $userID);
@@ -341,7 +360,12 @@ function addIncome($userID, $transID, $name, $description, $flatAmount, $period,
         $statement->bindValue(':period', $period);
         $statement->bindValue(':numPayments', $numPayments);
         $statement->bindValue(':startDate', $startDate);
+        $statement->bindValue(':endDate', $endDate);
         $statement->bindValue(':source', $source);
+
+        $statement->bindValue(':allTime',$flatAmount * $numPayments);
+        $statement->bindValue(':dailyRate',$flatAmount / $period);
+        
         $statement->execute();
 
         header("Location:home.php");

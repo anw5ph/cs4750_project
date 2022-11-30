@@ -65,7 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" name="startDate" id="startDate" class="form-control" placeholder="Start Date"/>
+                    <input type="text" name="startDate" id="startDate" class="form-control" placeholder="Start Date (Enter as seen: yyyy-mm-dd)"/>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" name="endDate" id="endDate" class="form-control" placeholder="End Date (Enter as seen: yyyy-mm-dd)"/>
                 </div>
 
                 <div class="form-outline mb-4">
