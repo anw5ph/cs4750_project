@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <nav class="navbar navbar-expand-md navbar-dark navbar-custom" style="--bs-bg-opacity: 1;
     background-color: #232D4B;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Welcome <?php echo $userInfo['firstName']; ?>!</a>
+            <a class="navbar-brand" href="#" style="pointer-events: none; cursor: default;">Welcome <?php echo $userInfo['firstName']; ?>!</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <br>
     <div class="container">
     <h2 style="text-align: center; color: gray;">Transaction History</h2>
-    
+
       <h3>Transaction Filters</h3>
 
       <form name="mainForm" action="home.php" method="post">

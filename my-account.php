@@ -32,7 +32,7 @@ $userInfo = getUser($curr_user);
           <nav class="navbar navbar-expand-md navbar-dark navbar-custom" style="--bs-bg-opacity: 1;
     background-color: #232D4B;">
             <div class="container-fluid">            
-              <a class="navbar-brand" href="#">Welcome <?php echo $userInfo['firstName']; ?>!</a>
+            <a class="navbar-brand" href="#" style="pointer-events: none; cursor: default;">Welcome <?php echo $userInfo['firstName']; ?>!</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -94,7 +94,7 @@ $userInfo = getUser($curr_user);
                 <h3> <?php echo $userInfo['email']; ?></h3>
             </div>
             <div class="fs-2 mb-3 text-center">
-                <h3> <?php echo $userInfo['firstName']; ?> <?php echo $userInfo['lastName']; ?></h3>
+                <h3> <?php echo $userInfo['firstName']; ?> <?php if ($userInfo['middleName'] != "Middle Name") echo $userInfo['middleName']; ?> <?php echo $userInfo['lastName']; ?></h3>
             </div>
             <div class="fs-2 mb-3 text-center">
                 <h3> <?php echo $userInfo['location']; ?></h3>

@@ -5,6 +5,7 @@ require("functions.php");
 session_start();
 if (isset($_COOKIE['user']))
 {
+
 $curr_user = $_SESSION['curr_user'];
 $userInfo = getUser($curr_user);
 
@@ -56,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Add Transaction') {
         addTransaction($curr_user, $_POST['name'], $_POST['description'], $_POST['flatAmount'], $_POST['period'], $_POST['numPayments'], $_POST['startDate'], $_POST['service']);
+
     }
 
 }
@@ -67,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
   <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
   
   <meta name="author" content="your name">
@@ -83,13 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-<?php
-?>
-    <header>
+
+<header>
         <nav class="navbar navbar-expand-md navbar-dark navbar-custom" style="--bs-bg-opacity: 1;
     background-color: #232D4B;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Welcome <?php echo $userInfo['firstName']; ?>!</a>
+                <a class="navbar-brand" href="#" style="pointer-events: none; cursor: default;">Welcome <?php echo $userInfo['firstName']; ?>!</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -136,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <br>
     <div class="container">
+
     <div class="row align-items-center justify-content-center" style="min-height: 100vh">
         <div class="col-md-4">
 
@@ -149,6 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   Name
                     <input type="text" name="name" id="name" class="form-control"
                     value="<?php if ($fetched_trans!=null) echo $fetched_trans['name'] ?>"/>
+
                 </div>
 
                 <div class="form-outline mb-4">
@@ -187,6 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       <option value="Debt Auto">Debt Auto</option>
                       <option value="Commissions">Commissions</option>
                     </select>
+
                 </div>
 
                 <button type="submit" value = "Add Transaction" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD TRANSACTION</button>
@@ -198,16 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
 
-
-
-
-
-
-
-
-
-    
-    <div class="container-fluid" id="footer-container">
+<div class="container-fluid" id="footer-container">
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-4-md d-flex align-items-center" style="padding-left: 6em;">
           <span class="mb-3 mb-md-8 text-muted">© 2022 Alexander Williams, Bryant Chow, Connor McCaffrey, and George Sun</span>
@@ -227,7 +225,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <?php
+
+<?php
     } else {
         header('Location: login.php');
     }
