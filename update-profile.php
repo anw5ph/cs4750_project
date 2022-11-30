@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <!-- Location input -->
                     <div class="form-outline mb-4">
-                        <select name='location'>
+                        <select class="form-select" name='location'>
                             <option name="Australia">Australia</option>
                             <option name="Brazil">Brazil</option>
                             <option name="Canada">Canada</option>
