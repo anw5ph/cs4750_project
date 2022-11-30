@@ -4,8 +4,8 @@ require("functions.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Add Transaction') {
-        addTransaction($_POST['userID'], $_POST['transID'], $_POST['name'], $_POST['description'], $_POST['flatAmount'], $_POST['period'], $_POST['numPayments'], $_POST['startDate']);
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Add Expense') {
+        addExpense($_POST['userID'], $_POST['transID'], $_POST['name'], $_POST['description'], $_POST['flatAmount'], $_POST['period'], $_POST['numPayments'], $_POST['startDate']);
     }
 }
 ?>
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 
-    <title>Add Transaction</title>
+    <title>Add Expense</title>
     
 
 </head>
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <form action="home.php" method="post">
 
-                <h2 style="text-align: center; color: gray;">Add Transaction</h2>
+                <h2 style="text-align: center; color: gray;">Add Expense</h2>
                 <br>
 
                 <div class="form-outline mb-4">
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-outline mb-4">
                     <input type="text" name="startDate" id="startDate" class="form-control" placeholder="Start Date"/>
                 </div>
-                
+
                 <div class="form-outline mb-4">
                     <?php
                         //$sql="SELECT name,id FROM student"; 
@@ -82,10 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <?php
                         }
                     ?>
-                </select>
+                    </select>
                 </div>
 
-                <button type="submit" value = "Add Transaction" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD TRANSACTION</button>
+                <button type="submit" value = "Add Expense" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD Expense</button>
             </form>
         </div>
     </div>

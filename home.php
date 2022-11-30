@@ -92,7 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="addtransaction.php">Add Transaction</a>
+                            <a class="nav-link" href="addtransactionexpense.php">Add Expense</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="addtransactionincome.php">Add Income</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link" id="btn-nav" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>

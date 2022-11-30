@@ -74,11 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         $sql="SELECT service FROM expenseServiceCategory"; 
                     ?>
-                    <select name='service'>Service>
+                    <select name='source'>Service>
                     <?php
                         foreach ($dbo->query($sql) as $row){//Array or records stored in $row
                     ?>
-                        <option name= <?php echo $row[service]; ?>><?php echo $row[service]; ?></option>
+                        <option name= <?php echo $row[source]; ?>><?php echo $row[source]; ?></option>
                     <?php
                         }
                     ?>
