@@ -239,9 +239,11 @@ function filterTransactions($userID, $since, $until, $order) {
     return $result;
 }
 
-function addTransaction($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate) {
+function addExpense($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate, $service) {
     global $db;
     $query = "INSERT INTO transactions (userID, transID, name, description, flatAmount, period, numPayments, startDate) VALUES (:userID, :transID, :name, :description, :flatAmount, :period, :numPayments, :startDate)";
+
+    $query = "INSERT INTO expense (userID, transID, service) VALUES (:userID, :transID, :service)";
 
     try {
         $statement = $db->prepare($query);
@@ -253,6 +255,43 @@ function addTransaction($userID, $transID, $name, $description, $flatAmount, $pe
         $statement->bindValue(':period', $period);
         $statement->bindValue(':numPayments', $numPayments);
         $statement->bindValue(':startDate', $startDate);
+        $statement->bindValue(':service', $service);
+        $statement->execute();
+
+        header("Location:home.php");
+        $statement->closeCursor();
+
+    }
+    catch (PDOException $e) {
+        // echo $e->getMessage();
+        if (str_contains($e->getMessage(), "Duplicate")) {
+            echo "A transaction already exists with this information <br/>";
+        }
+    }
+
+    catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+}
+
+function addIncome($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate, $source) {
+    global $db;
+    $query = "INSERT INTO transactions (userID, transID, name, description, flatAmount, period, numPayments, startDate) VALUES (:userID, :transID, :name, :description, :flatAmount, :period, :numPayments, :startDate)";
+
+    $query = "INSERT INTO incomeSource (userID, transID, source) VALUES (:userID, :transID, :source)";
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':transID', $transID);
+        $statement->bindValue(':name', $name);
+        $statement->bindValue(':description', $description);
+        $statement->bindValue(':flatAmount', $flatAmount);
+        $statement->bindValue(':period', $period);
+        $statement->bindValue(':numPayments', $numPayments);
+        $statement->bindValue(':startDate', $startDate);
+        $statement->bindValue(':source', $source);
         $statement->execute();
 
         header("Location:home.php");
