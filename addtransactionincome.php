@@ -69,19 +69,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-outline mb-4">
-                    <?php
-                        //$sql="SELECT name,id FROM student"; 
-
-                        $sql="SELECT service FROM expenseServiceCategory"; 
-                    ?>
-                    <select name='source'>Service>
-                    <?php
-                        foreach ($dbo->query($sql) as $row){//Array or records stored in $row
-                    ?>
-                        <option name= <?php echo $row[source]; ?>><?php echo $row[source]; ?></option>
-                    <?php
-                        }
-                    ?>
+                        <select name='location'>
+                            <option name="Commissions">Commissions</option>
+                            <option name="Gift">Gift</option>
+                            <option name="Inheritance">Inheritance</option>
+                            <option name="Interest/Dividends">Interest/Dividends</option>
+                            <option name="Investments">Investments</option>
+                            <option name="Profits">Profits</option>
+                            <option name="Rentals">Rentals</option>
+                            <option name="Salary">Salary</option>
+                            <option name="Socail Welfare">Socail Welfare</option>
+                            <option name="Wages">Wages</option>
                     </select>
                 </div>
 

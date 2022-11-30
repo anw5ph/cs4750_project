@@ -69,22 +69,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-outline mb-4">
-                    <?php
-                        //$sql="SELECT name,id FROM student"; 
-
-                        $sql="SELECT service FROM expenseServiceCategory"; 
-                    ?>
-                    <select name='service'>Service>
-                    <?php
-                        foreach ($dbo->query($sql) as $row){//Array or records stored in $row
-                    ?>
-                        <option name= <?php echo $row[service]; ?>><?php echo $row[service]; ?></option>
-                    <?php
-                        }
-                    ?>
-                    </select>
+                        <select name='location'>
+                            <option name="Debt Auto">Debt Auto</option>
+                            <option name="Debt Credit">Debt Credit</option>
+                            <option name="Debt Mortgage">Debt Mortgage</option>
+                            <option name="Debt Other">Debt Other</option>
+                            <option name="Debt Student">Debt Student</option>
+                            <option name="Emergency Car">Emergency Car</option>
+                            <option name="Emergency Home">Emergency Home</option>
+                            <option name="Emergency Medical">Emergency Medical</option>
+                            <option name="Emergency Other">Emergency Other</option>
+                            <option name="Entertainment Concessions">Entertainment Concessions</option>
+                            <option name="Entertainment Other">Entertainment Other</option>
+                            <option name="Entertainment Purchases">Entertainment Purchases</option>
+                            <option name="Entertainment Tickets">Entertainment Tickets</option>
+                            <option name="Hobby Equipment">Hobby Equipment</option>
+                            <option name="Hobby Fees">Hobby Fees</option>
+                            <option name="Hobby Other">Hobby Other</option>
+                            <option name="Housing Maintenance">Housing Maintenance</option>
+                            <option name="Housing Other">Housing Other</option>
+                            <option name="Housing Rent">Housing Rent</option>
+                            <option name="Insurance Health">Insurance Health</option>
+                            <option name="Insurance Life">Insurance Life</option>
+                            <option name="Insurance Other">Insurance Other</option>
+                            <option name="Insurance Property">Insurance Property</option>
+                            <option name="Luxury Cosmetics">Luxury Cosmetics</option>
+                            <option name="Luxury Fashion">Luxury Fashion</option>
+                            <option name="Luxury Other">Luxury Other</option>
+                            <option name="Luxury Restaurant">Luxury Restaurant</option>
+                            <option name="Luxury Substances">Luxury Substances</option>
+                            <option name="Misc. Products">Misc. Products</option>
+                            <option name="Misc. Services">Misc. Services</option>
+                            <option name="Misc. Payments">Misc. Payments</option>
+                            <option name="Sustenance Clothing">Sustenance Clothing</option>
+                            <option name="Sustenance Groceries">Sustenance Groceries</option>
+                            <option name="Sustenance Hygiene">Sustenance Hygiene</option>
+                            <option name="Sustenance Medications">Sustenance Medications</option>
+                            <option name="Sustenance Other">Sustenance Other</option>
+                            <option name="Taxes">Taxes</option>
+                            <option name="Transit Fare">Transit Fare</option>
+                            <option name="Transit Gasoline">Transit Gasoline</option>
+                            <option name="Transit Other">Transit Other</option>
+                            <option name="Transit Vehicle">Transit Vehicle</option>
+                            <option name="Travel Accomodations">Travel Accomodations</option>
+                            <option name="Travel Experiences">Travel Experiences</option>
+                            <option name="Travel Other">Travel Other</option>
+                            <option name="Travel Transport">Travel Transport</option>
+                            <option name="Utility Cell">Utility Cell</option>
+                            <option name="Utility Electricity">Utility Electricity</option>
+                            <option name="Utility Gas">Utility Gas</option>
+                            <option name="Utility Internet">Utility Internet</option>
+                            <option name="Utility Other">Utility Other</option>
+                            <option name="Utility Water">Utility Water</option>
+                        </select>
                 </div>
-
                 <button type="submit" value = "Add Expense" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD Expense</button>
             </form>
         </div>
