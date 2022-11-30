@@ -182,6 +182,7 @@ function updateTransaction($userID, $transID, $name, $description) {
     $statement->bindValue(':description', $description);
     $statement->execute();
     $result = $statement->fetch();
+    header("Location:home.php");
     $statement->closeCursor();
 
     echo "<p>$result</p>";
@@ -343,6 +344,7 @@ function addTransaction($userID, $name, $description, $flatAmount, $period, $num
         $statement->bindValue(':transID', $transID);
         $statement->bindValue(':service', $service);
         $statement->execute();
+        header("Location:home.php");
         $statement->closeCursor();
 
     
