@@ -150,6 +150,46 @@ function getTransactions($userID, $order) {
     return $result;
 }
 
+function getExpenses($userID, $order) {
+    global $db;
+    $query = "
+    (SELECT transID, name, source, period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
+        FROM transaction            NATURAL JOIN
+             transactionDailyRate   NATURAL JOIN
+             transactionAllTime     NATURAL JOIN
+             transactionDates       NATURAL JOIN
+             incomeSource
+        WHERE userID = :userID)
+    ORDER BY $order;";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userID', $userID);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
+function getIncomeSources($userID, $order) {
+    global $db;
+    $query = "
+    (SELECT transID, name, service AS \"Category\", period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
+        FROM transaction            NATURAL JOIN
+             transactionDailyRate   NATURAL JOIN
+             transactionAllTime     NATURAL JOIN
+             transactionDates       NATURAL JOIN
+             expense
+        WHERE userID = :userID)
+    ORDER BY $order;";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userID', $userID);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $statement->closeCursor();
+    return $result;
+}
+
 function delTransaction($userID, $transID) {
     global $db;
     $query = "DELETE FROM expense WHERE userID = :userID AND transID = :transID;

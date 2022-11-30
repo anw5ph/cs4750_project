@@ -19,6 +19,8 @@ $user_of_trans_to_update = null;
 $trans_to_update = null;
 
 $list_of_transactions = getTransactions($curr_user, $default_order);
+$list_of_expenses = getExpenses($curr_user, $default_order);
+$list_of_incomeSources = getIncomeSources($curr_user, $default_order);
 
 ?>
 
@@ -189,7 +191,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          <td><?php echo $trans_info['endDate']; ?></td>
          <td>
             <form action="home.php" method="post">
-                 <input type = "submit" value="Update" class = "btn btn-primary" name = "btnAction" title="Update Transaction" data-toggle="confirmation"/>
+                <?php if(!in_array($trans_info['transID'],array_column( $list_of_expenses, 'transID'))) : // No idea why this if statement needs !, but it works?>
+                 <input type = "submit" value="Update Expense" class = "btn btn-primary" name = "btnAction" title="Update Transaction" data-toggle="confirmation"/>
+                <?php endif; ?>
+                <?php if(!in_array($trans_info['transID'],array_column( $list_of_incomeSources, 'transID'))) : ?>
+                <input type = "submit" value="Update incomeSource" class = "btn btn-primary" name = "btnAction" title="Update Transaction" data-toggle="confirmation"/>
+                <?php endif; ?>
                  <input type="hidden" name="trans_to_update" value="<?php echo $trans_info['transID']; ?>" />
                  <input type="hidden" name="user_of_trans_to_update" value="<?php echo $userInfo['userID']; ?>" />
             </form>
