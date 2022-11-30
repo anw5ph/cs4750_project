@@ -129,8 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
       </div>
     </div>
-
+    <br>
     <div class="container">
+    <h2 style="text-align: center; color: gray;">Transaction History</h2>
+    
       <h3>Transaction Filters</h3>
 
       <form name="mainForm" action="home.php" method="post">
