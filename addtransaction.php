@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="row align-items-center justify-content-center" style="min-height: 100vh">
         <div class="col-md-4">
 
-            <form action="#" method="post">
+            <form action="home.php" method="post">
 
                 <h2 style="text-align: center; color: gray;">Add Transaction</h2>
                 <br>
@@ -189,9 +189,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-outline mb-4">
                   Service/Source
                   <label for="service"  class="form-control"  required>
-                    <select class="form-select" name="service" id="service">
-                      <option value="Debt Auto">Debt Auto</option>
-                      <option value="Commissions">Commissions</option>
+                    <select name="service" id="service">
+<option value= 'Debt Auto'>Debt Auto</option>
+<option value= 'Debt Credit'>Debt Credit</option>
+<option value='Debt Mortgage'>Debt Mortgage</option>
+ <option value='Debt Other'>Debt Other</option>
+ <option value='Debt Student'>Debt Student</option>
+ <option value='Emergency Car'>Emergency Car</option>
+ <option value='Emergency Home'>Emergency Home</option>
+ <option value='Emergency Medical'>Emergency Medical</option>
+ <option value='Emergency Other'>Emergency Other</option>
+ <option value='Entertainment Concessions'>Entertainment Concessions</option>
+ <option value='Entertainment Other'>Entertainment Other</option>
+ <option value='Entertainment Purchases'>Entertainment Purchases</option>
+ <option value='Entertainment Tickets'>Entertainment Tickets</option>
+ <option value= 'Hobby Equipment'>Hobby Equipment</option>
+ <option value='Hobby Fees'>Hobby Fees</option>
+ <option value='Hobby Other'>Hobby Other</option>
+ <option value='Housing Maintenance'>Housing Maintenance</option>
+ <option value='Housing Other'>Housing Other</option>
+ <option value= 'Housing Rent'>Housing Rent</option>
+ <option value= 'Insurance Health'>Insurance Health</option>
+ <option value='Insurance Life'>Insurance Life</option>
+ <option value='Insurance Other'>Insurance Other</option>
+ <option value='Insurance Property'>Insurance Property</option>
+ <option value='Luxury Cosmetics'>Luxury Cosmetics</option>
+ <option value='Luxury Fashion'>Luxury Fashion</option>
+ <option value= 'Luxury Other'>Luxury Other</option>
+ <option value='Luxury Restaurant'>Luxury Restaurant</option>
+ <option value='Luxury Substances'>Luxury Substances</option>
+ <option value='Misc. Products'>Misc. Products</option>
+ <option value='Misc. Services'>Misc. Services</option>
+ <option value='Misc. Payments'>Misc. Payments</option>
+ <option value='Sustenance Clothing'>Sustenance Clothing</option>
+ <option value='Sustenance Groceries'>Sustenance Groceries</option>
+ <option value='Sustenance Hygiene'>Sustenance Hygiene</option>
+ <option value='Sustenance Medications'>Sustenance Medications</option>
+ <option value='Sustenance Other'>Sustenance Other</option>
+ <option value='Taxes'>Taxes</option>
+ <option value='Transit Fare'>Transit Fare</option>
+ <option value='Transit Gasoline'>Transit Gasoline</option>
+ <option value='Transit Other'>Transit Other</option>
+ <option value= 'Transit Vehicle'>Transit Vehicle</option>
+ <option value= 'Travel Accomodations'>Travel Accomodations</option>
+ <option value='Travel Experiences'>Travel Experiences</option>
+ <option value='Travel Other'>Travel Other</option>
+ <option value='Travel Transport'>Travel Transport</option>
+ <option value= 'Utility Cell'>Utility Cell</option>
+ <option value= 'Utility Electricity'>Utility Electricity</option>
+ <option value='Utility Gas'>Utility Gas</option>
+ <option value='Utility Internet'>Utility Internet</option>
+ <option value='Utility Other'>Utility Other</option>
+ <option value='Utility Water'>tility Water</option>
+ <option value= 'Commissions'>Commissions</option>
+ <option value= 'Gift'>Gift</option>
+ <option value= 'Inheritance'>Inheritance</option>
+ <option value='Interest/Dividends'>Interest/Dividends</option>
+ <option value='Investments'>Investments</option>
+ <option value='Profits'>Profits</option>
+ <option value='Rentals'>Rentals</option>
+ <option value='Salary'>Salary</option>
+ <option value= 'Social Welfare'>Social Welfare</option>
+ <option value= 'Wages'>Wages</option>
                     </select>
 
                 </div>
