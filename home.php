@@ -11,6 +11,7 @@ $userInfo = getUser($curr_user);
 $default_since = date("Y-m-d");
 $default_until = date("Y-m-d");
 $default_order = "startDate DESC";
+$default_type = "";
 
 $user_of_trans_to_delete = null;
 $trans_to_delete = null;
@@ -21,7 +22,7 @@ $trans_to_update = null;
 $fetched_trans = null;
 $_SESSION['fetched'] = $fetched_trans;
 
-$list_of_transactions = getTransactions($curr_user, $default_order);
+$list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
 
 ?>
 
@@ -34,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $default_since = $_POST['since'];
     $default_until = $_POST['until'];
     $default_order = $_POST['order'];
-    $list_of_transactions = filterTransactions($curr_user, $_POST['since'], $_POST['until'], $_POST['order']);
+    $default_type = $_POST['type'];
+    $list_of_transactions = filterTransactions($curr_user, $_POST['since'], $_POST['until'], $_POST['order'], $_POST['type']);
   }
   elseif(!empty($_POST['logOut']) && $_POST['logOut'] == 'Logout') {
     userLogout();
@@ -42,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Delete') {
     delTransaction($_POST['user_of_trans_to_delete'], $_POST['trans_to_delete']);
-    $list_of_transactions = getTransactions($curr_user, $default_order);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
   }
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Update') {
     $fetched_trans = fetchTransaction($_POST['user_of_trans_to_update'], $_POST['trans_to_update']);
     $_SESSION['fetched'] = $fetched_trans;
     header('Location:addtransaction.php');
-    $list_of_transactions = getTransactions($curr_user, $default_order);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
   }
 }
 
@@ -154,6 +156,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <option value="startDate DESC">Newest</option>
           <option value="startDate ASC">Oldest</option>
           <option value="elapsed DESC">Largest</option>
+        </select>
+      </div>
+
+      <div class="row mb-3 mx-3">
+        Type
+        <label for="type"  class="form-control"  required>
+        <select name="type" id="type">
+          <option value=""> -- select an option -- </option>
+          <option value="Non-discretionary">Non-discretionary Expense</option>
+          <option value="Discretionary">Discretionary Expense</option>
+          <option value="Active">Active Income</option>
+          <option value="Passive">Passive Income</option>
+          <option value="Other">Other Income</option>
         </select>
       </div>
 
