@@ -225,4 +225,36 @@ function filterTransactions($userID, $since, $until, $order) {
     return $result;
 }
 
+function addTransaction($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate) {
+    global $db;
+    $query = "INSERT INTO transactions (userID, transID, name, description, flatAmount, period, numPayments, startDate) VALUES (:userID, :transID, :name, :description, :flatAmount, :period, :numPayments, :startDate)";
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':userID', $userID);
+        $statement->bindValue(':transID', $transID);
+        $statement->bindValue(':name', $name);
+        $statement->bindValue(':description', $description);
+        $statement->bindValue(':flatAmount', $flatAmount);
+        $statement->bindValue(':period', $period);
+        $statement->bindValue(':numPayments', $numPayments);
+        $statement->bindValue(':startDate', $startDate);
+        $statement->execute();
+
+        header("Location:login.php");
+        $statement->closeCursor();
+
+    }
+    catch (PDOException $e) {
+        // echo $e->getMessage();
+        if (str_contains($e->getMessage(), "Duplicate")) {
+            echo "A transaction already exists with this information <br/>";
+        }
+    }
+
+    catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+}
 ?>
