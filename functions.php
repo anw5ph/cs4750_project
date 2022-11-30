@@ -220,10 +220,15 @@ function updateTransaction($userID, $transID) {
 }
 
 
-function filterTransactions($userID, $since, $until, $order) {
+function filterTransactions($userID, $since, $until, $order, $type) {
 
     if(!strtotime($since) or !strtotime($until)) {
-        return getTransactions($userID, $order);
+        if ($type == "allTransactions")
+            return getTransactions($userID, $order);
+        elseif ($type == "expenses")
+            return getExpenses($userID, $order);
+        elseif ($type == "incomeSources")
+            return getIncomeSources($userID, $order);
     } 
 
     $now = date("Y-m-d");
@@ -232,7 +237,12 @@ function filterTransactions($userID, $since, $until, $order) {
     $dateUntil = new DateTime($until);
 
     if($dateSince >= $dateUntil) {
-        return getTransactions($userID, $order);
+        if ($type == "allTransactions")
+            return getTransactions($userID, $order);
+        elseif ($type == "expenses")
+            return getExpenses($userID, $order);
+        elseif ($type == "incomeSources")
+            return getIncomeSources($userID, $order);
 
     }
     echo "<p>$order</p>";
