@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="home.php">Home</a>
+                            <a class="nav-link" href="home.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="my-account.php">My Account</a>
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="addtransaction.php">Add Transaction</a>
+                            <a class="nav-link active" href="addtransaction.php">Add Transaction</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link" id="btn-nav" data-bs-toggle="modal" data-bs-target="#exampleModal">Logout</a>
@@ -179,10 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     value="<?php if ($fetched_trans!=null) echo $fetched_trans['startDate'] ?>"/>
                 </div>
 
-                <div class="row mb-3 mx-3">
+                <div class="form-outline mb-4">
                   Service/Source
                   <label for="service"  class="form-control"  required>
-                    <select name="service" id="service">
+                    <select class="form-select" name="service" id="service">
                       <option value="Debt Auto">Debt Auto</option>
                       <option value="Commissions">Commissions</option>
                     </select>
