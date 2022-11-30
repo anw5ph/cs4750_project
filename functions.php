@@ -161,8 +161,22 @@ function delTransaction($userID, $transID) {
     $statement->closeCursor();
 }
 
-function updateTransaction($userID, $transID) {
-    
+function updateTransaction($userID, $transID, $name, $description, $flatAmount, $period, $numPayments, $startDate) {
+    global $db;
+    $query = "UPDATE transaction SET userID=:userID, transID=:transID, name=:name, description=:description, flatAmount=:flatAmount, period=:period, numPayments=:numPayments, startDate=:startDate WHERE userID=:userID AND transID=:transID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':userID', $userID);
+    $statement->bindValue(':transID', $transID);
+    $statement->bindValue(':name', $name);
+    $statement->bindValue(':description', $description);
+    $statement->bindValue(':flatAmount', $flatAmount);
+    $statement->bindValue(':period', $period);
+    $statement->bindValue(':numPayments', $numPayments);
+    $statement->bindValue(':startDate', $startDate);
+    $statement->execute();
+
+    header("Location:my-account.php");
+    $statement->closeCursor();
 }
 
 
@@ -241,7 +255,7 @@ function addTransaction($userID, $transID, $name, $description, $flatAmount, $pe
         $statement->bindValue(':startDate', $startDate);
         $statement->execute();
 
-        header("Location:login.php");
+        header("Location:home.php");
         $statement->closeCursor();
 
     }
