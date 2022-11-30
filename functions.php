@@ -122,7 +122,12 @@ function updateUser($userID, $firstName, $middleName, $lastName, $email, $locati
 
 }
 
-function getTransactions($userID, $order) {
+function getTransactions($userID, $order, $type) {
+    $test = 0;
+    if(strlen($type) == 0) {
+        $test = 1;
+    }
+
     global $db;
     $query = "
     (SELECT transID, name, service AS \"Category\", period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\", startDate, endDate
@@ -130,20 +135,24 @@ function getTransactions($userID, $order) {
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
              transactionDates       NATURAL JOIN
-             expense
-        WHERE userID = :userID)
+             expense                NATURAL JOIN
+             expenseServiceCategory NATURAL JOIN
+             expenseNecessity
+        WHERE userID = :userID AND (necessityLevel = :type OR $test))
     UNION
     (SELECT transID, name, source, period, flatAmount, numPayments, dailyRate, allTime AS \"elapsed\",startDate, endDate
         FROM transaction            NATURAL JOIN
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
              transactionDates       NATURAL JOIN
-             incomeSource
-        WHERE userID = :userID)
+             incomeSource           NATURAL JOIN
+             incomeSourceType
+        WHERE userID = :userID AND (type = :type OR $test))
     ORDER BY $order;";
 
     $statement = $db->prepare($query);
     $statement->bindValue(':userID', $userID);
+    $statement->bindValue(':type', $type);
     $statement->execute();
     $result = $statement->fetchAll();
     $statement->closeCursor();
@@ -166,10 +175,10 @@ function updateTransaction($userID, $transID) {
 }
 
 
-function filterTransactions($userID, $since, $until, $order) {
+function filterTransactions($userID, $since, $until, $order, $type) {
 
     if(!strtotime($since) or !strtotime($until)) {
-        return getTransactions($userID, $order);
+        return getTransactions($userID, $order, $type);
     } 
 
     $now = date("Y-m-d");
@@ -178,13 +187,17 @@ function filterTransactions($userID, $since, $until, $order) {
     $dateUntil = new DateTime($until);
 
     if($dateSince >= $dateUntil) {
-        return getTransactions($userID, $order);
+        return getTransactions($userID, $order, $type);
 
     }
-    echo "<p>$order</p>";
     
     //if(Id is null, 0, id)
     // DATEDIFF(if(startDate < :since, :since, startDate), if(endDate > :until, :until, endDate)) AS \"elapsed\"
+
+    $test = 0;
+    if(strlen($type) == 0) {
+        $test = 1;
+    }
 
     global $db;
     $query = "
@@ -194,11 +207,14 @@ function filterTransactions($userID, $since, $until, $order) {
              transactionDailyRate   NATURAL JOIN
              transactionAllTime     NATURAL JOIN
              transactionDates       NATURAL JOIN
-             expense
+             expense                NATURAL JOIN
+             expenseServiceCategory NATURAL JOIN
+             expenseNecessity
         WHERE userID = :userID AND NOT
               ((:since <= startDate AND :until <= startDate) OR 
                (:since >= endDate AND :until >= endDate)
-              )
+              ) AND
+              (necessityLevel = :type OR $test)
     )
     UNION
     (SELECT name, period, flatAmount, numPayments, allTime, startDate, endDate, dailyRate *
@@ -207,11 +223,13 @@ function filterTransactions($userID, $since, $until, $order) {
             transactionDailyRate    NATURAL JOIN
             transactionAllTime      NATURAL JOIN
             transactionDates        NATURAL JOIN
-            incomeSource
+            incomeSource            NATURAL JOIN
+            incomeSourceType
         WHERE userID = :userID AND NOT
               ((:since <= startDate AND :until <= startDate) OR 
                (:since >= endDate AND :until >= endDate)
-              )
+              ) AND
+              (type = :type OR $test)
     )
     ORDER BY $order;";
 
@@ -219,6 +237,7 @@ function filterTransactions($userID, $since, $until, $order) {
     $statement->bindValue(':userID', $userID);
     $statement->bindValue(':since', $since);
     $statement->bindValue(':until', $until);
+    $statement->bindValue(':type', $type);
     $statement->execute();
     $result = $statement->fetchAll();
     $statement->closeCursor();
