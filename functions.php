@@ -162,7 +162,8 @@ function getTransactions($userID, $order, $type) {
 function delTransaction($userID, $transID) {
     global $db;
     $query = "DELETE FROM expense WHERE userID = :userID AND transID = :transID;
-              DELETE FROM incomeSource WHERE userID = :userID AND transID = :transID";
+              DELETE FROM incomeSource WHERE userID = :userID AND transID = :transID;
+              DELETE FROM transaction WHERE userID = :userID AND transID = :transID";
     $statement = $db->prepare($query);
     $statement->bindValue(":userID", $userID);
     $statement->bindValue(":transID", $transID);
