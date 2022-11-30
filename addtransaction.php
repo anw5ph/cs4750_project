@@ -13,6 +13,7 @@ $fetched_trans = $_SESSION['fetched'];
 $default_since = date("Y-m-d");
 $default_until = date("Y-m-d");
 $default_order = "startDate DESC";
+$default_type = "";
 
 $trans_to_delete = null;
 $trans_to_update = null;
@@ -23,7 +24,7 @@ if($fetched_trans != null) {
 }
 
 
-$list_of_transactions = getTransactions($curr_user, $default_order);
+$list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
 
 ?>
 
@@ -44,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Delete') {
     delTransaction($curr_user, $trans_to_delete);
-    $list_of_transactions = getTransactions($curr_user, $default_order);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
   }
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Update Transaction') {
     updateTransaction($curr_user, $trans_to_update, $_POST['name'], $_POST['description']);
-    $list_of_transactions = getTransactions($curr_user, $default_order);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
   }
 
 
@@ -234,5 +235,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 </html>
 
-
- 
