@@ -259,6 +259,10 @@ function filterTransactions($userID, $since, $until, $order, $type) {
 
 
 function addTransaction($userID, $name, $description, $flatAmount, $period, $numPayments, $startDate, $service) {
+    $incomeSourceList = array('Commissions', 'Gift','Inheritance','Interest/Dividends', 'Investments','Profits','Rentals','Salary','Social Welfare','Wages');
+
+
+
     $transID = time();
 
     if(!strtotime($startDate)) {
@@ -274,10 +278,10 @@ function addTransaction($userID, $name, $description, $flatAmount, $period, $num
     $dailyRate = $flatAmount / $period;
 
     $transType = "";
-    if($service == "Debt Auto") {
-        $transType = "expense";
-    } else {
+    if(in_array($service, $incomeSourceList)) {
         $transType = "incomeSource";
+    } else {
+        $transType = "expense";
     }
 
     
