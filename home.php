@@ -18,6 +18,9 @@ $trans_to_delete = null;
 $user_of_trans_to_update = null;
 $trans_to_update = null;
 
+$fetched_trans = null;
+$_SESSION['fetched'] = $fetched_trans;
+
 $list_of_transactions = getTransactions($curr_user, $default_order);
 
 ?>
@@ -43,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Update') {
-    updateTransaction($_POST['user_of_trans_to_update'], $_POST['trans_to_update']);
+    $fetched_trans = fetchTransaction($_POST['user_of_trans_to_update'], $_POST['trans_to_update']);
+    $_SESSION['fetched'] = $fetched_trans;
+    header('Location:addtransaction.php');
     $list_of_transactions = getTransactions($curr_user, $default_order);
   }
 }
@@ -185,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          <td><?php echo $trans_info['startDate']; ?></td>
          <td><?php echo $trans_info['endDate']; ?></td>
          <td>
-            <form action="home.php" method="post">
+            <form action="#" method="post">
                  <input type = "submit" value="Update" class = "btn btn-primary" name = "btnAction" title="Update Transaction" data-toggle="confirmation"/>
                  <input type="hidden" name="trans_to_update" value="<?php echo $trans_info['transID']; ?>" />
                  <input type="hidden" name="user_of_trans_to_update" value="<?php echo $userInfo['userID']; ?>" />
