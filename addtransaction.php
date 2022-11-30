@@ -1,5 +1,5 @@
 <?php
-require("connect-db.php");
+require('connect-db.php');
 require("functions.php");
 
 session_start();
@@ -8,27 +8,83 @@ if (isset($_COOKIE['user']))
 
 $curr_user = $_SESSION['curr_user'];
 $userInfo = getUser($curr_user);
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Add Transaction') {
-        addTransaction($curr_user, $_POST['transID'], $_POST['name'], $_POST['description'], $_POST['flatAmount'], $_POST['period'], $_POST['numPayments'], $_POST['startDate']);
-    }
+
+$fetched_trans = $_SESSION['fetched'];
+
+$default_since = date("Y-m-d");
+$default_until = date("Y-m-d");
+$default_order = "startDate DESC";
+$default_type = "";
+
+$trans_to_delete = null;
+$trans_to_update = null;
+
+if($fetched_trans != null) {
+  $trans_to_update = $fetched_trans['transID'];
+  $trans_to_delete = $fetched_trans['transID'];;
 }
+
+
+$list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
+
+?>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Filter') {
+    //$day_filter = $_POST['days'];
+    //$list_of_transactions = filterTransactions($curr_user, $_POST['days']);
+
+    $default_since = $_POST['since'];
+    $default_until = $_POST['until'];
+    $default_order = $_POST['order'];
+    $list_of_transactions = filterTransactions($curr_user, $_POST['since'], $_POST['until'], $_POST['order']);
+  }
+  elseif(!empty($_POST['logOut']) && $_POST['logOut'] == 'Logout') {
+    userLogout();
+  }
+
+  elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Delete') {
+    delTransaction($curr_user, $trans_to_delete);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
+  }
+
+  elseif(!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Update Transaction') {
+    updateTransaction($curr_user, $trans_to_update, $_POST['name'], $_POST['description']);
+    $list_of_transactions = getTransactions($curr_user, $default_order, $default_type);
+  }
+
+
+    if (!empty($_POST['btnAction']) && $_POST['btnAction'] == 'Add Transaction') {
+        addTransaction($curr_user, $_POST['name'], $_POST['description'], $_POST['flatAmount'], $_POST['period'], $_POST['numPayments'], $_POST['startDate'], $_POST['service']);
+
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <title>Add Transaction</title>
+  
+  <meta name="author" content="your name">
+  <meta name="description" content="include some description about your page">  
     
-
+  <title>Home</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- <link rel="stylesheet" href="home.css"> -->
+  
+  <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
+       
 </head>
 
 <body>
@@ -82,53 +138,72 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
       </div>
     </div>
+    <br>
+    <div class="container">
 
-<div class="container">
     <div class="row align-items-center justify-content-center" style="min-height: 100vh">
         <div class="col-md-4">
 
-            <form action="home.php" method="post">
+            <form action="#" method="post">
 
                 <h2 style="text-align: center; color: gray;">Add Transaction</h2>
                 <br>
 
-                <!-- <div class="form-outline mb-4">
-                    <input type="number" step=1 name="userID" id="userID" class="form-control" placeholder="userID"/>
-                </div> -->
 
                 <div class="form-outline mb-4">
-                    <input type="number" step=1 name="transID" id="transID" class="form-control" placeholder="Transaction ID"/>
+                  Name
+                    <input type="text" name="name" id="name" class="form-control"
+                    value="<?php if ($fetched_trans!=null) echo $fetched_trans['name'] ?>"/>
+
+                </div>
+
+                <div class="form-outline mb-4">
+                  Description
+                    <input type="text" name="description" id="description" class="form-control" value="<?php if ($fetched_trans!=null) echo $fetched_trans['description'] ?>"/>
+                </div>
+
+                <div class="form-outline mb-4">
+                  Flat Amount
+                    <input type="number" step=0.01 name="flatAmount" id="flatAmount" class="form-control" 
+                    value="<?php if ($fetched_trans!=null) echo $fetched_trans['flatAmount'] ?>"/>
                 </div>
                 
                 <div class="form-outline mb-4">
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Name"/>
+                  Period
+                    <input type="number" step=1 name="period" id="period" class="form-control" 
+                    value="<?php if ($fetched_trans!=null) echo $fetched_trans['period'] ?>"/>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" name="description" id="description" class="form-control" placeholder="Description"/>
+                  Number of Payments
+                    <input type="number" step=1 name="numPayments" id="numPayments" class="form-control"
+                    value="<?php if ($fetched_trans!=null) echo $fetched_trans['numPayments'] ?>"/>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="number" step=0.01 name="flatAmount" id="flatAmount" class="form-control" placeholder="Flat Amount"/>
-                </div>
-                
-                <div class="form-outline mb-4">
-                    <input type="number" step=1 name="period" id="period" class="form-control" placeholder="Period"/>
+                  Start Date
+                    <input type="text" name="startDate" id="startDate" class="form-control"
+                    value="<?php if ($fetched_trans!=null) echo $fetched_trans['startDate'] ?>"/>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="number" step=1 name="numPayments" id="numPayments" class="form-control" placeholder="Number of Payments"/>
-                </div>
+                  Service/Source
+                  <label for="service"  class="form-control"  required>
+                    <select class="form-select" name="service" id="service">
+                      <option value="Debt Auto">Debt Auto</option>
+                      <option value="Commissions">Commissions</option>
+                    </select>
 
-                <div class="form-outline mb-4">
-                    <input type="text" name="startDate" id="startDate" class="form-control" placeholder="Start Date (Enter as seen: yyyy-mm-dd)"/>
                 </div>
 
                 <button type="submit" value = "Add Transaction" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >ADD TRANSACTION</button>
+
+                <button type="submit" value = "Update Transaction" name="btnAction" class="btn btn-primary btn-block mb-4" style="background-color: #3b71ca; border-color: #3b71ca; width: 100%; box-shadow: 0 4px 9px -4px #3b71ca; hover-bg: #3b71ca; active-bg: #3b71ca;" >UPDATE TRANSACTION</button>
             </form>
         </div>
     </div>
-</div>
+    </div>
+
 
 <div class="container-fluid" id="footer-container">
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -156,6 +231,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: login.php');
     }
     ?>
-
 </body>
 </html>
+
