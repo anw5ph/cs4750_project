@@ -6,4 +6,5 @@
 3. Make this directory a git repository `git init`
 4. Connect this repository to the one on github `git add remote origin https://github.com/anw5ph/cs4750_project.git`
 5. Update your branch to the latest branch on the Github repository `git pull`
-6. In order to locally interact with the Google Cloud database, email anw5ph@virginia.edu to have your IP address added to the list of allowed connections.
+6. Copy and paste the files from this repo into your xampp folder within the htdocs subfolder, then run Apache webserver from your xampp dashboard.
+7. In order to locally interact with the Google Cloud database, email anw5ph@virginia.edu to have your IP address added to the list of allowed connections.
